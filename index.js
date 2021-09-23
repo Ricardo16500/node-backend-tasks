@@ -1,14 +1,37 @@
 //https://stackoverflow.com/questions/9177049/express-js-req-body-undefined
 
 var express = require("express");
-var bodyParser = require('body-parser')
-
+var bodyParser = require('body-parser');
+var sha256 = require('js-sha256');
+var jwt = require('jsonwebtoken');
+var mysql      = require('mysql');
 var jsonParser = bodyParser.json()
 //var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var surrogateKey = 1;
 var app = express();
 
 var tasks = []
+
+
+//conectar base de datos 
+var conn = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Ricardo16500",
+    port: 3333,
+    database: "task"
+  });
+
+  conn.connect(
+    function (err) { // en err llega errores de conexion
+        if (err) {
+            console.log("********** ERROR ********", err);
+            throw err;
+        }
+        // Si no existen errores de conexion
+        console.log("Connected!");
+    }
+);
 
 app.get("/", (req, res, next) => {
     res.json("{ 'message': 'Tasks server online'}");
