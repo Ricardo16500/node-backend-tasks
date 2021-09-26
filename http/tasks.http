@@ -1,6 +1,24 @@
 ### Invocar al servidor en mi maquina: localhost
 GET http://localhost:3000/
 
+###
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "user": "Ricardo16500",
+    "password": "Contrasenia123"
+}
+
+
+###
+POST http://localhost:3000/auth
+Content-Type: application/json
+
+{
+    "user": "Ricardo16500",
+    "password": "Contrasenia123"
+}
 
 ### Crear una nueva tarea
 POST http://localhost:3000/tasks

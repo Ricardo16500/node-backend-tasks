@@ -19,7 +19,7 @@ var conn = mysql.createConnection({
     user: "root",
     password: "Ricardo16500",
     port: 3333,
-    database: "task"
+    database: "tasks_db"
   });
 
   conn.connect(
@@ -42,7 +42,52 @@ app.post("/tasks", jsonParser, (req, res, next) => {
     tasks.push(req.body);
     res.send("OK!");
 });
+app.post("/user",jsonParser,(req,res,next)=>{
+    const appData = req.body;
+    const pwdHash = hashPassword(appData.password);
+    const sql = "INSERT INTO tk_user VALUES (null,'"+appData.user+"','"+pwdHash+"')";
+    conn.query( sql, 
+        function (err, result) { // CALLBACK HELL -> PROMISES CASCADE HELL -> ASYNC AWAIT
+            if (err) throw err; // Si existe error se para la ejecucion con throe
+            // Si no existe error imprimimos en consola 
+            console.log("Result: " + result);
+            // Retornamos el contendio
+            res.json(result);
+        }
+    );
+});
+app.post("/auth",jsonParser, (req,res,next)=> {
+    const appData = req.body;
+    const pwdHash = hashPassword(appData.password);
+    const SQL = "SELECT user_id,username FROM tk_user WHERE (username = '"+appData.user+ "' and  user_password = '"+pwdHash+"') ";
+    let respuesta;
+    conn.query(SQL,
+        function (err, result) { // CALLBACK HELL -> PROMISES CASCADE HELL -> ASYNC AWAIT
+            if (err) throw err; // Si existe error se para la ejecucion con throe
+            // Si no existe error imprimimos en consola 
+            
+            if(result.length == 1) {
+                const token = buildToken(result[0].user_id, result[0].username);
+                // Retornamos el contendio
+                res.json({ token: token });
+            } else {
+                res.status(401).send();
+            }
+        }
+        );
 
+});
+function hashPassword(pwd){
+    return(sha256.sha256(sha256.sha256(pwd+"trabajo1ingenieriasoftware")+"fabio_vaquera"));
+}
+function buildToken(userId,username){
+    const payload = {
+        sub: userId,
+        username: username,
+        exp: Math.floor(Date.now()/1000)+(60*2)
+    };
+    return jwt.sign(payload,"16052000123456789");
+}
 //update values, completed tasks, pending tasks
 app.put("/tasks/:taskId", jsonParser, (req, res, next) => {
     var status =req.query.state;
