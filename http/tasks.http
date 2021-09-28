@@ -1,6 +1,7 @@
 ### Invocar al servidor en mi maquina: localhost
 GET http://localhost:3000/
 
+
 ###
 POST http://localhost:3000/user
 Content-Type: application/json
@@ -21,17 +22,19 @@ Content-Type: application/json
 }
 
 ### Crear una nueva tarea
-POST http://localhost:3000/tasks
+POST http://localhost:3000/ntasks
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzc5NDc5LCJpYXQiOjE2MzI3NzkzNTl9.YlZlu3QMFDKsk4C_NYRA9aE_y9uFP4dHW4_yQANZYus
 
 {
-    "title": "Tarea 1",
-    "detail": "Detalle de la tarea 1",
-    "state": "pending"
+    "title": "Tarea 4",
+    "detail": "Detalle de la tarea 4",
+    "state_task": "PENDING"
 }
 
 ### obtener una tarea 
 GET http://localhost:3000/tasks
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzU2NTQ4LCJpYXQiOjE2MzI3NTY0Mjh9.CHZhwsTKplBwIJ5hda_mfFbTeaYwd47UGVv7f8P_8rs
 
 ### obtener  tarea 1
 GET http://localhost:3000/tasks/1
@@ -49,9 +52,22 @@ Content-Type: application/json
 DELETE http://localhost:3000/tasks/1
 
 ### completed tasks 1
-PUT http://localhost:3000/tasks/1?state=completed
+PUT http://localhost:3000/ntasks/1?task_status=COMPLETED
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzgwODEwLCJpYXQiOjE2MzI3ODA2OTB9.9zYWU_BR3h3igqWYBPRqj2PldZ4nD2eXUG47TnZX5AY
+###
+DELETE http://localhost:3000/ntasks/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzgwODEwLCJpYXQiOjE2MzI3ODA2OTB9.9zYWU_BR3h3igqWYBPRqj2PldZ4nD2eXUG47TnZX5AY
 
 ### pending tasks 1
-PUT http://localhost:3000/tasks/1?state=pending
+PUT http://localhost:3000/ntasks/1?task_status=PENDING
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzgwODEwLCJpYXQiOjE2MzI3ODA2OTB9.9zYWU_BR3h3igqWYBPRqj2PldZ4nD2eXUG47TnZX5AY
 
+### pending
+PUT http://localhost:3000/ntasks/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiUmljYXJkbzE2NTAwIiwiZXhwIjoxNjMyNzgwODkxLCJpYXQiOjE2MzI3ODA3NzF9.XLhNMQ0mQE8Gm-pzkGqt-tFm8KyA34wyQVfEKmJU6ao
 
+{
+    "title": "actualizado",
+    "detail": "detalle actualizado",
+}
